@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: "space"
+      POSTGRES_USER: "django"
+      POSTGRES_PASSWORD: "django"
+    ports:
+      - "5433:5432"
