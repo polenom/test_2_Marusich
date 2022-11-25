@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 
 from space_api.models import Station
@@ -85,6 +86,7 @@ def test_get_stations(station):
 @pytest.mark.django_db
 def test_update_station(station):
     response = client.patch(f'/api/v1/stations/{station.pk}/', data={"name": "asd"})
+    print(123, Station.objects.all().count())
     assert response.data['name'] == "asd"
     response = client.put(f'/api/v1/stations/{station.pk}/', data={"name": "dsa", "status": "broken"})
     assert response.data['name'] == "dsa"
@@ -94,13 +96,13 @@ def test_update_station(station):
     assert response.data[0]["status"] == "running"
 
 
-
 @pytest.mark.django_db
 def test_delete_station(station):
     response = client.delete(f'/api/v1/stations/{123321321}/')
     assert response.status_code == 404
     client.delete(f'/api/v1/stations/{station.pk}/')
     assert len(Station.objects.all()) == 0
+
 
 @pytest.mark.django_db
 def test_get_post_coordinates(station, user):
@@ -118,6 +120,7 @@ def test_get_post_coordinates(station, user):
     response = client.post(url, data={"user": user.username, "axis": "e", "distance": 10})
     assert response.status_code == 400
 
+
 @pytest.mark.django_db
 def test_run_brok(station, user):
     url = f'/api/v1/stations/{station.pk}/'
@@ -129,3 +132,11 @@ def test_run_brok(station, user):
     response = client.get(url)
     assert response.data['status'] == 'broken'
 
+
+@pytest.mark.django_db
+def test_create_user():
+    count = User.objects.all().count()
+    client.post('/api/v1/user/', data={"username": "bbffdfddfdffds",
+                                       "password": "Qwerty123",
+                                       "email": "aaa@vk.by"})
+    assert User.objects.all().count() == count + 1

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'space_api',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -132,5 +133,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
     ],
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Test_API',
+    'DESCRIPTION': 'Test_API',
+    'VERSION': '3.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
