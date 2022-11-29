@@ -69,8 +69,7 @@ class StationsVeiwSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True, name='state')
     def state(self, request, pk):
         object = self.get_object()
-        if object:
-            serializer = StationCordinatSerializer(object)
+        serializer = StationCordinatSerializer(instance=object)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @extend_schema(

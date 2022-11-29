@@ -4,6 +4,8 @@ from space_api.services import UserDataClass, create_user
 
 from space_api.models import Station
 
+from rest_framework.test import APIClient
+
 
 @pytest.fixture
 def user():
@@ -19,3 +21,8 @@ def user():
 @pytest.fixture
 def station():
     return Station.objects.create(name="bild")
+
+
+@pytest.fixture
+def client():
+    return APIClient()

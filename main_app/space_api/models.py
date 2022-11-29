@@ -7,11 +7,12 @@ from django.db import models
 
 
 class Station(models.Model):
-    SPACE_STATUS = (('r', 'running'),
-                    ('b', 'broken'))
+    class StatusChoices(models.TextChoices):
+        r = 'r', 'running'
+        b = 'b', 'broken'
 
     name = models.CharField(max_length=100, unique=True)
-    status = models.CharField(max_length=1, choices=SPACE_STATUS, default='r')
+    status = models.CharField(max_length=1, choices=StatusChoices.choices, default='r')
     create_date = models.DateTimeField(auto_now_add=True)
     broke_date = models.DateTimeField(blank=True, null=True)
     x = models.IntegerField(default=100)

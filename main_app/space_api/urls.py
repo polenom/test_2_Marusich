@@ -5,10 +5,10 @@ from rest_framework import routers
 from space_api.views import StationsVeiwSet, CreateUser
 
 router = routers.SimpleRouter()
-router.register(r'stations', StationsVeiwSet)
+router.register(r'stations', StationsVeiwSet, basename='stations')
 print(router.urls)
 
 urlpatterns = [
     path('',include(router.urls)),
-    path('user/', CreateUser.as_view())
+    path('user/', CreateUser.as_view(), name='create_user')
 ]

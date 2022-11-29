@@ -14,7 +14,7 @@ from space_api.services import create_user, UserDataClass
 @extend_schema_field(OpenApiTypes.STR)
 class ChoiceStatusField(serializers.ChoiceField):
     def to_representation(self, value):
-        return self.choices[value]
+        return self.choices[value].label
 
 
 @extend_schema_serializer(
@@ -31,12 +31,12 @@ class ChoiceStatusField(serializers.ChoiceField):
     ],
 )
 class StationsSerializer(serializers.ModelSerializer):
-    status = ChoiceStatusField(choices=Station.SPACE_STATUS, read_only=True)
+    status = ChoiceStatusField(choices=Station.StatusChoices, read_only=True)
 
     class Meta:
         model = Station
         fields = ('id', 'status', 'create_date', 'broke_date', 'name',)
-        read_only = ('id', 'create_date', 'broke_date',)
+        read_only = ('id', 'create_date', 'broke_date', 'status')
 
 
 class StationCordinatSerializer(serializers.ModelSerializer):
